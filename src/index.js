@@ -48,4 +48,4 @@ input.addEventListener('input', e => {
   getCountries(e);
 });
 
-// document.addEventListener('click', debounce(console.log(e.currentTarget), 300));
+// document.addEventListener('click', _.debounce(console.log(e.currentTarget), 300));
