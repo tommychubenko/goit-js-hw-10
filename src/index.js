@@ -5,12 +5,11 @@ const list = document.querySelector('.country-list');
 const oneCountry = document.querySelector('.country-info');
 
 console.log(input);
-let inputData = '';
 let answerList = '';
 
-function getCountries() {
+function getCountries(e) {
   fetch(
-    `https://restcountries.com/v2/name/${inputData}?fields=name,capital,flag,languages,population`
+    `https://restcountries.com/v2/name/${e.currentTarget.value}?fields=name,capital,flag,languages,population`
   )
     .then(responce => {
       return responce.json();
@@ -35,15 +34,12 @@ function getCountries() {
       } else if (countries.length === 1) {
         const { name, flag, capital, population } = countries[0];
         list.innerHTML = '';
-        console.log(countries);
-        answerList = `<ul><li><img src="${flag}" alt="Flag of ${name}" class="one-flag"><span class="one-name"> ${name}</span></li><li><p class="one-info"><b>Capital: </b>${capital}</p></li><li><p class="one-info"><b>Population: </b>${population}</p></li><li><p class="one-info"><b>Languages:</b> ${countries[0].languages[0].name}</p></li></ul>`;
-        // console.log(answerList);
-        oneCountry.innerHTML = answerList;
+        oneCountry.innerHTML = `<ul><li><img src="${flag}" alt="Flag of ${name}" class="one-flag"><span class="one-name"> ${name}</span></li><li><p class="one-info"><b>Capital: </b>${capital}</p></li><li><p class="one-info"><b>Population: </b>${population}</p></li><li><p class="one-info"><b>Languages:</b> ${countries[0].languages[0].name}</p></li></ul>`;
       }
-    });
+    })
+    .catch(console.log('ERROR'));
 }
 
 input.addEventListener('input', e => {
-  inputData = e.currentTarget.value;
-  getCountries();
+  getCountries(e);
 });
