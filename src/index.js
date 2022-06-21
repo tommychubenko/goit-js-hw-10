@@ -27,7 +27,7 @@ function getCountries({ target }) {
       } else {
         (list.innerHTML = ''),
           (oneCountry.innerHTML = ''),
-          Notify.failure('Oops, there is no country with that name');
+          Notify.info('Oops, there is no country with that name');
       }
     })
     .catch(() =>
