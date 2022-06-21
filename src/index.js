@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// var debounce = require('lodash.debounce');
+import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
 const input = document.querySelector('#search-box');
@@ -14,6 +14,7 @@ function getCountries(e) {
     `https://restcountries.com/v2/name/${e.currentTarget.value}?fields=name,capital,flag,languages,population`
   )
     .then(responce => {
+      console.log(responce);
       return responce.json();
     })
     .then(countries => {
@@ -41,11 +42,19 @@ function getCountries(e) {
           (oneCountry.innerHTML = ''),
           Notify.failure('Oops, there is no country with that name');
       }
-    });
+    })
+    .catch(
+      Notify.failure(`Ooops... Something wrong... Maybe it is a problem `)
+    );
 }
 
 input.addEventListener('input', e => {
   getCountries(e);
 });
 
-// document.addEventListener('click', _.debounce(console.log(e.currentTarget), 300));
+document.addEventListener(
+  'click',
+  debounce(e => {
+    console.log(e.currentTarget);
+  }, 300)
+);
